@@ -31,36 +31,24 @@ public class Libro {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) throws Exception {
-		if (nombre.length() >= 2 || nombre.length() <= 150) {
-			this.nombre = nombre;
-		} else {
-			throw new Exception("El texto tiene que estar entre 2 y 150 caracteres");
-		}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(BigDecimal precio) throws Exception {
-		if (precio.compareTo(new BigDecimal(0)) == 1) {
-			this.precio = precio;
-		} else {
-			throw new Exception("El precio debe ser mayor que cero");
-		}
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
 
 	public Long getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(Long descuento) throws Exception {
-		if (descuento >= 0 || descuento <= 100) {
-			this.descuento = descuento;
-		} else {
-			throw new Exception("El descuento debe estar entre 0 y 100");
-		}
+	public void setDescuento(Long descuento) {
+		this.descuento = descuento;
 	}
 
 	public String getAutor() {
@@ -68,11 +56,7 @@ public class Libro {
 	}
 
 	public void setAutor(String autor) {
-		if (autor == "" || autor == null) {
-			this.autor = "anonimo";
-		} else {
-			this.autor = autor;
-		}
+		this.autor = autor;
 	}
 
 	public String getImagen() {
@@ -80,7 +64,6 @@ public class Libro {
 	}
 
 	public void setImagen(String imagen) {
-		// TODO nose como hacer por ahora
 		this.imagen = imagen;
 	}
 

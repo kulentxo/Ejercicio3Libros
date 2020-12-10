@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class libroConsola {
-
+	// TODO mirar si hace falta poner excepciones
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Long idLibro = 0L;
@@ -43,24 +43,39 @@ public class libroConsola {
 		String nombre, autor, imagen;
 		BigDecimal precio;
 		Long descuento;
-		System.out.println("Introduce el nombre del libro");
-		nombre = sc.nextLine();
-		System.out.println("Introduce el precio del libro");
-		precio = new BigDecimal(sc.nextLine());
-		System.out.println("Inserta el descuento que tenga el libro");
-		descuento = Long.parseLong(sc.nextLine());
-		System.out.println("Inserta el autor del libro");
-		autor = sc.nextLine();
-		System.out.println("Inserta la imagen del libro");
-		imagen = sc.nextLine();
-		if (!libros.isEmpty()) {
-			idLibro += 1L;
-			l = new Libro(idLibro, nombre, precio, descuento, autor, imagen);
-			libros.add(l);
-		} else {
-			l = new Libro(idLibro, nombre, precio, descuento, autor, imagen);
-			libros.add(l);
+		do {
+			System.out.println("Introduce el nombre del libro");
+			nombre = sc.nextLine();
+		} while (nombre.length() <= 2 || nombre.length() >= 150);
+		try {
+			do {
+				System.out.println("Introduce el precio del libro");
+				precio = new BigDecimal(sc.nextLine());
+			} while (precio.compareTo(new BigDecimal("0")) == 1);
+			do {
+				System.out.println("Inserta el descuento que tenga el libro");
+				descuento = Long.parseLong(sc.nextLine());
+			} while (descuento < 0 || descuento > 100);
+			System.out.println("Inserta el autor del libro");
+			autor = sc.nextLine();
+			if (autor == "" || autor == null) {
+				autor = "anonimo";
+			}
+			System.out.println("Inserta la imagen del libro");
+			imagen = sc.nextLine();
+			if (!libros.isEmpty()) {
+				idLibro += 1L;
+				l = new Libro(idLibro, nombre, precio, descuento, autor, imagen);
+				libros.add(l);
+			} else {
+				l = new Libro(idLibro, nombre, precio, descuento, autor, imagen);
+				libros.add(l);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error");
 		}
+
 	}
 
 	private static void pintarMenu() {
