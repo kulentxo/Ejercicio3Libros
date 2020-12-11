@@ -1,6 +1,5 @@
 package ejercicio3.pojo;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,7 +21,7 @@ public class libroConsola {
 				borrarLibro(sc, libros);
 				break;
 			}
-		} while ("S" != opc);
+		} while ("S" == opc);
 
 	}
 
@@ -39,43 +38,60 @@ public class libroConsola {
 	}
 
 	private static void insertarLibro(Scanner sc, ArrayList<Libro> libros, Long idLibro) {
-		Libro l;
-		String nombre, autor, imagen;
-		BigDecimal precio;
-		Long descuento;
+		Libro l = new Libro();
+		String id, nombre, autor, imagen, precio, descuento;
 		do {
-			System.out.println("Introduce el nombre del libro");
+			System.out.println("Introduce un Id");
+			id = sc.nextLine();
+			l.setPrecio(id);
+			if (!l.isCorrecto()) {
+				System.out.println(l.getErrorId());
+			}
+		} while (l.isCorrecto() == false);
+		do {
+			System.out.println("Introduce un nombre");
 			nombre = sc.nextLine();
-		} while (nombre.length() <= 2 || nombre.length() >= 150);
-		try {
-			do {
-				System.out.println("Introduce el precio del libro");
-				precio = new BigDecimal(sc.nextLine());
-			} while (precio.compareTo(new BigDecimal("0")) == 1);
-			do {
-				System.out.println("Inserta el descuento que tenga el libro");
-				descuento = Long.parseLong(sc.nextLine());
-			} while (descuento < 0 || descuento > 100);
-			System.out.println("Inserta el autor del libro");
+			l.setPrecio(nombre);
+			if (!l.isCorrecto()) {
+				System.out.println(l.getErrorNombre());
+			}
+		} while (l.isCorrecto() == false);
+		do {
+			System.out.println("Introduce un autor");
 			autor = sc.nextLine();
-			if (autor == "" || autor == null) {
-				autor = "anonimo";
+			l.setPrecio(autor);
+			if (!l.isCorrecto()) {
+				System.out.println(l.getErrorAutor());
 			}
-			System.out.println("Inserta la imagen del libro");
+		} while (l.isCorrecto() == false);
+		do {
+			System.out.println("Introduce un imagen");
 			imagen = sc.nextLine();
-			if (!libros.isEmpty()) {
-				idLibro += 1L;
-				l = new Libro(idLibro, nombre, precio, descuento, autor, imagen);
-				libros.add(l);
-			} else {
-				l = new Libro(idLibro, nombre, precio, descuento, autor, imagen);
-				libros.add(l);
+			l.setPrecio(imagen);
+			if (!l.isCorrecto()) {
+				System.out.println(l.getErrorImagen());
 			}
+		} while (l.isCorrecto() == false);
 
-		} catch (Exception e) {
-			System.out.println("Error");
-		}
+		do {
+			System.out.println("Introduce un precio");
+			precio = sc.nextLine();
+			l.setPrecio(precio);
+			if (!l.isCorrecto()) {
+				System.out.println(l.getErrorPrecio());
+			}
+		} while (l.isCorrecto() == false);
 
+		do {
+			System.out.println("Introduce un descuento");
+			descuento = sc.nextLine();
+			l.setDescuento(descuento);
+			if (!l.isCorrecto()) {
+				System.out.println(l.getErrorDescuento());
+			}
+		} while (l.isCorrecto() == false);
+		libros.add(l);
+		System.out.println("Libro añadido");
 	}
 
 	private static void pintarMenu() {

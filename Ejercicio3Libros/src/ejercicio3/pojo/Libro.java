@@ -10,21 +10,48 @@ public class Libro {
 	private String autor;
 	private String imagen;
 
-	public Libro(Long id, String nombre, BigDecimal precio, Long descuento, String autor, String imagen) {
-		this.id = id;
-		this.nombre = nombre;
-		this.precio = precio;
-		this.descuento = descuento;
-		this.autor = autor;
-		this.imagen = imagen;
+	private boolean correcto = true;
+
+	private String errorId;
+	private String errorNombre;
+	private String errorPrecio;
+	private String errorDescuento;
+	private String errorAutor;
+	private String errorImagen;
+
+	public Libro() {
+		super();
+	}
+
+	public Libro(String id, String nombre, String precio, String descuento, String autor, String imagen) {
+		setId(id);
+		setNombre(nombre);
+		setPrecio(precio);
+		setDescuento(descuento);
+		setAutor(autor);
+		setImagen(imagen);
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(String id) {
+		// TODO mirar porque devuelve null en la pantalla
+		Long id1;
+		try {
+			id1 = Long.parseLong(id);
+			if (id1 != null && id1 < 0) {
+				setErrorId("El id no puede ser inferior o igual a 0");
+			} else {
+				correcto = true;
+				this.id = id1;
+			}
+
+		} catch (Exception e) {
+			setErrorId("El id debe ser un numero");
+		}
+
 	}
 
 	public String getNombre() {
@@ -32,6 +59,9 @@ public class Libro {
 	}
 
 	public void setNombre(String nombre) {
+		if (!(nombre.trim().length() > 2 && nombre.trim().length() < 150)) {
+			setErrorNombre("El nombre tiene que contener entre 2 y 150 caracteres");
+		}
 		this.nombre = nombre;
 	}
 
@@ -39,16 +69,40 @@ public class Libro {
 		return precio;
 	}
 
-	public void setPrecio(BigDecimal precio) {
-		this.precio = precio;
+	public void setPrecio(String precio) {
+		BigDecimal precio1;
+		try {
+			precio1 = new BigDecimal(precio);
+			if ((precio1.compareTo(new BigDecimal("0")) < 0) || !precio.matches("^\\d{1,3}(\\.\\d{1,2})?$")) {
+				setErrorPrecio("El precio no puede ser menor a 0 y tiene que contener 2 decimales");
+			} else {
+				correcto = true;
+				this.precio = precio1;
+			}
+
+		} catch (Exception e) {
+			setErrorPrecio("El precio debe de ser un numero");
+		}
+
 	}
 
 	public Long getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(Long descuento) {
-		this.descuento = descuento;
+	public void setDescuento(String descuento) {
+		Long descuento1;
+		try {
+			descuento1 = Long.parseLong(descuento);
+			if (descuento1 >= 0 && descuento1 <= 100) {
+				correcto = true;
+				this.descuento = descuento1;
+			} else {
+				setErrorDescuento("El descuento debe estar entre 0 y 100");
+			}
+		} catch (Exception e) {
+			setErrorDescuento("El descuento debe de ser un numero");
+		}
 	}
 
 	public String getAutor() {
@@ -56,7 +110,11 @@ public class Libro {
 	}
 
 	public void setAutor(String autor) {
-		this.autor = autor;
+		if (autor == "" || autor == null) {
+			autor = "anonimo";
+		} else {
+			this.autor = autor;
+		}
 	}
 
 	public String getImagen() {
@@ -65,6 +123,68 @@ public class Libro {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
+	}
+
+	public boolean isCorrecto() {
+		return correcto;
+	}
+
+	public void setCorrecto(boolean correcto) {
+		this.correcto = correcto;
+	}
+
+	public String getErrorId() {
+		return errorId;
+	}
+
+	public void setErrorId(String errorId) {
+		correcto = false;
+		this.errorId = errorId;
+	}
+
+	public String getErrorNombre() {
+		return errorNombre;
+	}
+
+	public void setErrorNombre(String errorNombre) {
+		correcto = false;
+		this.errorNombre = errorNombre;
+	}
+
+	public String getErrorPrecio() {
+		return errorPrecio;
+	}
+
+	public void setErrorPrecio(String errorPrecio) {
+		correcto = false;
+		this.errorPrecio = errorPrecio;
+	}
+
+	public String getErrorDescuento() {
+		return errorDescuento;
+	}
+
+	public void setErrorDescuento(String errorDescuento) {
+		correcto = false;
+		this.errorDescuento = errorDescuento;
+	}
+
+	public String getErrorAutor() {
+		return errorAutor;
+	}
+
+	public void setErrorAutor(String errorAutor) {
+		correcto = false;
+		this.errorAutor = errorAutor;
+	}
+
+	public String getErrorImagen() {
+		return errorImagen;
+	}
+
+	public void setErrorImagen(String errorImagen) {
+		correcto = false;
+		this.errorImagen = errorImagen;
 	}
 
 	@Override
