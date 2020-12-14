@@ -58,13 +58,19 @@ public class Libro {
 	}
 
 	public void setNombre(String nombre) {
+		boolean error = false;
 		for (char c : nombre.toCharArray()) {
 			if (Character.isDigit(c)) {
-				setErrorNombre("El nombre no puede contener numeros");
+				error = true;
 			}
 		}
-		if (!(nombre.trim().length() > 2 && nombre.trim().length() < 150)) {
-			setErrorNombre("El nombre tiene que contener entre 2 y 150 caracteres");
+		if (!(nombre.trim().length() > 2 && nombre.trim().length() < 150) || error) {
+			if (error) {
+				setErrorNombre("El nombre no puede contener numeros");
+			} else {
+				setErrorNombre("El nombre tiene que contener entre 2 y 150 caracteres");
+			}
+
 		} else {
 			correcto = true;
 			this.nombre = nombre;
@@ -116,11 +122,23 @@ public class Libro {
 	}
 
 	public void setAutor(String autor) {
-		if (autor == "" || autor == null) {
-			autor = "anonimo";
-		} else {
-			this.autor = autor;
+		boolean error = false;
+		for (char c : autor.toCharArray()) {
+			if (Character.isDigit(c)) {
+				error = true;
+			}
 		}
+		if (error) {
+			setErrorAutor("El nombre no puede contener numeros");
+		} else {
+			if (autor == "" || autor == null) {
+				autor = "anonimo";
+			} else {
+				correcto = true;
+				this.autor = autor;
+			}
+		}
+
 	}
 
 	public String getImagen() {
