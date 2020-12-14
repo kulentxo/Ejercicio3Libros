@@ -1,4 +1,4 @@
-package ejercicio3.pojo;
+package com.ejercicio3.mf0227.pojo;
 
 import java.math.BigDecimal;
 
@@ -37,7 +37,6 @@ public class Libro {
 	}
 
 	public void setId(String id) {
-		// TODO mirar porque devuelve null en la pantalla
 		Long id1;
 		try {
 			id1 = Long.parseLong(id);
@@ -59,10 +58,17 @@ public class Libro {
 	}
 
 	public void setNombre(String nombre) {
+		for (char c : nombre.toCharArray()) {
+			if (Character.isDigit(c)) {
+				setErrorNombre("El nombre no puede contener numeros");
+			}
+		}
 		if (!(nombre.trim().length() > 2 && nombre.trim().length() < 150)) {
 			setErrorNombre("El nombre tiene que contener entre 2 y 150 caracteres");
+		} else {
+			correcto = true;
+			this.nombre = nombre;
 		}
-		this.nombre = nombre;
 	}
 
 	public BigDecimal getPrecio() {
@@ -73,7 +79,7 @@ public class Libro {
 		BigDecimal precio1;
 		try {
 			precio1 = new BigDecimal(precio);
-			if ((precio1.compareTo(new BigDecimal("0")) < 0) || !precio.matches("^\\d{1,3}(\\.\\d{1,2})?$")) {
+			if ((precio1.compareTo(new BigDecimal("0")) < 0)) {
 				setErrorPrecio("El precio no puede ser menor a 0 y tiene que contener 2 decimales");
 			} else {
 				correcto = true;

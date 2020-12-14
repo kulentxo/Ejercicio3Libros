@@ -1,4 +1,4 @@
-package ejercicio3.accesodatos;
+package com.ejercicio3.mf0227.accesodatos;
 
 public interface Dao<T> {
 	Iterable<T> listar();

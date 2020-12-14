@@ -1,9 +1,11 @@
-package ejercicio3.pojo;
+package com.ejercicio3.mf0227.app;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class libroConsola {
+import com.ejercicio3.mf0227.pojo.Libro;
+
+public class LibroConsola {
 	// TODO mirar si hace falta poner excepciones
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -21,7 +23,7 @@ public class libroConsola {
 				borrarLibro(sc, libros);
 				break;
 			}
-		} while ("S" == opc);
+		} while ("S" != opc.toUpperCase());
 
 	}
 
@@ -31,10 +33,15 @@ public class libroConsola {
 			System.out.printf("%15s %6d %9d %15s \n", libro.getNombre(), libro.getPrecio().intValue(),
 					libro.getDescuento().intValue(), libro.getAutor());
 		}
-		System.out.println("Introduce la posicion de libro(Teniendo en cuenta que el primero es 0)");
-		int opc = Integer.parseInt(sc.nextLine());
-		libros.remove(opc);
-		System.out.println("El libro ha sido borrado");
+		try {
+			System.out.println("Introduce la posicion de libro(Teniendo en cuenta que el primero es 0)");
+			int opc = Integer.parseInt(sc.nextLine());
+			libros.remove(opc);
+			System.out.println("El libro ha sido borrado");
+		} catch (Exception e) {
+			System.out.println("El id introducido debe ser numerico");
+		}
+
 	}
 
 	private static void insertarLibro(Scanner sc, ArrayList<Libro> libros, Long idLibro) {
@@ -43,7 +50,7 @@ public class libroConsola {
 		do {
 			System.out.println("Introduce un Id");
 			id = sc.nextLine();
-			l.setPrecio(id);
+			l.setId(id);
 			if (!l.isCorrecto()) {
 				System.out.println(l.getErrorId());
 			}
@@ -51,7 +58,7 @@ public class libroConsola {
 		do {
 			System.out.println("Introduce un nombre");
 			nombre = sc.nextLine();
-			l.setPrecio(nombre);
+			l.setNombre(nombre);
 			if (!l.isCorrecto()) {
 				System.out.println(l.getErrorNombre());
 			}
@@ -59,7 +66,7 @@ public class libroConsola {
 		do {
 			System.out.println("Introduce un autor");
 			autor = sc.nextLine();
-			l.setPrecio(autor);
+			l.setAutor(autor);
 			if (!l.isCorrecto()) {
 				System.out.println(l.getErrorAutor());
 			}
@@ -67,7 +74,7 @@ public class libroConsola {
 		do {
 			System.out.println("Introduce un imagen");
 			imagen = sc.nextLine();
-			l.setPrecio(imagen);
+			l.setImagen(imagen);
 			if (!l.isCorrecto()) {
 				System.out.println(l.getErrorImagen());
 			}
